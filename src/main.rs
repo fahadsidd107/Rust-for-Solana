@@ -72,7 +72,8 @@ let arr = [0,1,2,3,4,5,6,7,8,9,10];
 let slicedArray = &arr[2..5];
 println!("slicedArray: {:?}", slicedArray);
 
-
+let slice = &arr[1..3];
+borrowing_slice(arr, slice)
 }
 
 pub fn is_even(num: u8)->bool {
@@ -80,7 +81,7 @@ pub fn is_even(num: u8)->bool {
     digit == 0
 }
 
-fn borrowing_slice(arr: &[u8], slice: &[u8]) {
+fn borrowing_slice(arr: [u8;11], slice: &[u8]) {
     println!("arr: {:?}", arr);
     println!("slice: {:?}", slice);
     println!("length: {}", slice.len());
