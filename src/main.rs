@@ -73,7 +73,105 @@ let slicedArray = &arr[2..5];
 println!("slicedArray: {:?}", slicedArray);
 
 let slice = &arr[1..3];
-borrowing_slice(arr, slice)
+borrowing_slice(arr, slice);
+
+//strings
+
+let str: &str="hello world";
+let mut string: String = String::from("Hello world!");
+
+let slice = &string[.. 6];
+// slice.len();
+
+string.push('1');
+string.push_str("! Bob");
+let string_after_functions_applied = string.replace("Hello", "Bye!");
+println!("{}", string_after_functions_applied);
+
+
+//if else
+
+let number = 3;
+if number > 0 {
+    println!("Number is greater than 0")
+}else if number < 0 {
+    println!("Number is less than 0")
+}else {
+    println!("Number is 0")
+}
+
+//for loop
+ 
+for i in 0..6{
+    println!("{}",i);
+}
+
+//while loop
+
+let mut i = 0;
+while i < 4 {
+    println!("{}",i);
+    i = i + 1;
+    if i == 3{
+        println!("Exiting looop");
+        break;
+    }
+}
+
+//match statement
+
+let q = 5;
+match q{
+    0 => println!("0"),
+    1 | 2 => println!("1 or 2"),
+    3..=4   => println!("3 till 4"),
+    _ => println!("default"),
+
+}
+
+//structs
+
+let name = String::from("Ronaldo");
+let player = Player{
+    name , 
+    attacking: 99,
+    defending: 99,
+    passes: 99,
+    shooting: 99,
+};
+player.print_player();
+
+//traits
+
+println!("{} {}",player.is_player(),player.won_ball());
+
+//enums
+
+let a: MyEnum = MyEnum::A;
+let b: MyEnum = MyEnum::B(5);
+let c: MyEnum = MyEnum::C{x: 1, y:2};
+
+println!("{:?}",a);
+println!("{:?}",b);
+println!("{:?}",c);
+
+if let MyEnum::B(val)=b{
+    println!("{}",val);
+}
+if let MyEnum::C{x,y}=c{
+    println!("{} {} ",x,y);
+}
+
+//vectors
+
+let mut vec:Vec<i64> = vec![0,1,2,3,4,5,6,7];
+vec.len();
+vec[0];
+vec.push(8);
+vec.remove(0);
+println!("{:?}",vec);
+
+
 }
 
 pub fn is_even(num: u8)->bool {
@@ -88,3 +186,42 @@ fn borrowing_slice(arr: [u8;11], slice: &[u8]) {
     println!("{} {}",slice[0],slice[1]);
 }
 
+struct Player{
+    name : String,
+    attacking:u64,
+    defending:u64,
+    passes:u64,
+    shooting:u64,
+}
+
+impl Player{
+    fn print_player(&self){
+        println!("name: {}",self.name);
+        println!("attacking: {}",self.attacking);
+        println!("defending: {}",self.defending);
+        println!("passes: {}",self.passes);
+        println!("shooting: {}",self.shooting);
+    }
+}
+
+impl Ballon_Deor for Player {
+    fn won_ball(&self) -> bool {
+        true
+    }
+    fn is_player(&self) -> bool{
+        true
+    } 
+}
+trait Ballon_Deor{
+    fn won_ball(&self) -> bool;
+    fn is_player(&self) -> bool{
+        false
+    }    
+}
+
+#[derive(Debug)]
+enum MyEnum {
+    A,
+    B(i32),
+    C{x:i32, y:i32},
+}
